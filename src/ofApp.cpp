@@ -6,16 +6,16 @@ void ofApp::setup(){
 
 	aGroup.add(a.set("a", ofFloatColor(0.5, 0.5, 0.5, 1.0), 
 	      		ofFloatColor(0.0, 0.0, 0.0, 0.0), 
-	      		ofFloatColor(1.0, 1.0, 1.0, 1.0)));
+	      		ofFloatColor(2.0, 2.0, 2.0, 1.0)));
 	bGroup.add(b.set("b", ofFloatColor(0.5, 0.5, 0.5, 1.0), 
 	      		ofFloatColor(0.0, 0.0, 0.0, 0.0), 
-	      		ofFloatColor(1.0, 1.0, 1.0, 1.0)));
-	cGroup.add(c.set("c", ofFloatColor(0.5, 0.5, 0.5, 1.0), 
+	      		ofFloatColor(2.0, 2.0, 2.0, 1.0)));
+	cGroup.add(c.set("c", ofFloatColor(1.0, 0.7, 0.4, 1.0), 
 	      		ofFloatColor(0.0, 0.0, 0.0, 0.0), 
-	      		ofFloatColor(1.0, 1.0, 1.0, 1.0)));
-	dGroup.add(d.set("d", ofFloatColor(0.5, 0.5, 0.5, 1.0), 
+	      		ofFloatColor(2.0, 2.0, 2.0, 1.0)));
+	dGroup.add(d.set("d", ofFloatColor(0.0, 0.15, 0.2, 1.0), 
 	      		ofFloatColor(0.0, 0.0, 0.0, 0.0), 
-	      		ofFloatColor(1.0, 1.0, 1.0, 1.0)));
+	      		ofFloatColor(2.0, 2.0, 2.0, 1.0)));
 
 	aPanel.setup(aGroup);
 	aPanel.setPosition(margin, margin);
@@ -25,8 +25,6 @@ void ofApp::setup(){
 	cPanel.setPosition(bPanel.getPosition().x + bPanel.getWidth() + margin, margin);
 	dPanel.setup(dGroup);
 	dPanel.setPosition(cPanel.getPosition().x + cPanel.getWidth() + margin, margin);
-
-	ofLog() << aPanel.getHeight();
 
 	shader.load("shaders/shader_vert.glsl", "shaders/shader_frag.glsl");
 }
@@ -68,9 +66,8 @@ void ofApp::draw(){
 		shader.setUniform4f("b", bc.r, bc.g, bc.b, bc.a);
 		shader.setUniform4f("c", cc.r, cc.g, cc.b, cc.a);
 		shader.setUniform4f("d", dc.r, dc.g, dc.b, dc.a);
-		shader.setUniform1f("width", ofGetWidth() - 2 * margin);
-		shader.setUniform1f("margin", margin);
-		shader.setUniform1f("windowWidth", ofGetWidth());
+		shader.setUniform2f("pos", xBand - wBand / 2.0, margin);
+		shader.setUniform2f("dim", wBand, h);
 
 		ofSetColor(ofColor::white);
 		ofDrawPlane(xBand, yBand, wBand, h);
